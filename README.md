@@ -1,7 +1,7 @@
 # Snip — URL Shortener
 
-A self-hosted URL shortener with custom aliases, click tracking, and a clean light UI.
-Deployed on [Render](https://render.com) with PostgreSQL.
+A self-hosted, containerised URL shortener with custom aliases, click tracking, and a clean light UI.
+Built with Docker and deployed on [Render](https://render.com) with PostgreSQL.
 
 **Live:** [snip-zdbg.onrender.com](https://snip-zdbg.onrender.com)
 
@@ -14,7 +14,8 @@ Deployed on [Render](https://render.com) with PostgreSQL.
 | Backend | Node.js + Express |
 | Database | PostgreSQL (Render free tier) |
 | Frontend | Vanilla HTML / CSS / JS |
-| Hosting | Render (Docker) |
+| Container | Docker + Docker Compose |
+| Hosting | Render (Docker runtime) |
 
 ---
 
@@ -25,6 +26,7 @@ urlshort/
 ├── Dockerfile
 ├── docker-compose.yml
 ├── render.yaml
+├── .env.example
 ├── backend/
 │   ├── server.js
 │   └── package.json
@@ -41,12 +43,56 @@ urlshort/
 - Click tracking
 - Recent links dashboard
 - Persistent storage via PostgreSQL
+- Fully containerised — runs anywhere Docker runs
+
+---
+
+## Run Locally with Docker
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/vinigani01/urlshort
+cd urlshort
+```
+
+### 2. Set up environment
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and set `DATABASE_URL` to a local or remote PostgreSQL connection string:
+
+```
+DATABASE_URL=postgresql://user:password@localhost:5432/urlshort
+BASE_URL=http://localhost:3000
+```
+
+### 3. Build and run
+
+```bash
+docker compose up --build -d
+```
+
+### 4. Open the app
+
+```
+http://localhost:3000
+```
+
+### Stop
+
+```bash
+docker compose down
+```
 
 ---
 
 ## Deploy to Render
 
-This repo includes a `render.yaml` blueprint that sets everything up automatically.
+Render runs the app directly from the `Dockerfile` — no extra build config needed.
+The `render.yaml` blueprint automates the full setup.
 
 ### Steps
 
@@ -54,15 +100,15 @@ This repo includes a `render.yaml` blueprint that sets everything up automatical
 
 2. Go to [render.com](https://render.com) → **New → Blueprint**
 
-3. Connect your GitHub repo — Render will detect `render.yaml` and create:
-   - A free PostgreSQL database (`urlshort-db`)
-   - A Docker web service (`snip`)
+3. Connect your GitHub repo — Render reads `render.yaml` and creates:
+   - A free PostgreSQL database
+   - A Docker web service built from the `Dockerfile`
 
-4. After the first deploy completes, copy your app URL from the Render dashboard (e.g. `https://your-app.onrender.com`)
+4. After the first deploy, copy your app URL from the Render dashboard
 
 5. Go to your service → **Environment** → set `BASE_URL` to your app URL → **Save Changes**
 
-Render will redeploy automatically and your short links will use the correct base URL.
+Render redeploys automatically on every push to `main`.
 
 ---
 
@@ -70,15 +116,13 @@ Render will redeploy automatically and your short links will use the correct bas
 
 | Variable | Description |
 |---|---|
-| `DATABASE_URL` | PostgreSQL connection string — set automatically by Render via the blueprint |
+| `DATABASE_URL` | PostgreSQL connection string — auto-set by Render via the blueprint |
 | `BASE_URL` | Public base URL for generated short links (e.g. `https://your-app.onrender.com`) |
-| `PORT` | Port the server listens on (default: `3000`) |
+| `PORT` | Port the container exposes (default: `3000`) |
 
 ---
 
 ## Custom Domain
-
-To connect a custom domain:
 
 1. Render dashboard → your service → **Settings → Custom Domains**
 2. Add your domain and follow the DNS instructions
@@ -88,5 +132,5 @@ To connect a custom domain:
 
 ## Notes
 
-- The Render free tier spins down after inactivity — the first request after a period of idle may take ~50 seconds to wake up.
+- The Render free tier spins down after inactivity — the first request after idle may take ~50 seconds as the container restarts.
 - There is no authentication by default — anyone who can reach the app can create links.
