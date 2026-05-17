@@ -5,6 +5,11 @@ Built with Docker and deployed on [Render](https://render.com) with PostgreSQL.
 
 **Live:** [snip-zdbg.onrender.com](https://snip-zdbg.onrender.com)
 
+## Notes
+
+- The Render free tier spins down after inactivity, the first request after idle may take ~50 seconds as the container restarts.
+- There is no authentication by default — anyone who can reach the app can create links.
+  
 ---
 
 ## Stack
@@ -128,9 +133,3 @@ Render redeploys automatically on every push to `main`.
 2. Add your domain and follow the DNS instructions
 3. Update `BASE_URL` in Environment to match your custom domain
 
----
-
-## Notes
-
-- The Render free tier spins down after inactivity — the first request after idle may take ~50 seconds as the container restarts.
-- There is no authentication by default — anyone who can reach the app can create links.
