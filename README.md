@@ -94,7 +94,7 @@ docker compose down
 
 ---
 
-## Deploy to Render
+## Deploy to Render (Recommended)
 
 Render runs the app directly from the `Dockerfile` — no extra build config needed.
 The `render.yaml` blueprint automates the full setup.
