@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: url-shortener
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      # Set BASE_URL to your public domain or ngrok URL when exposing publicly.
+      # Leave as localhost for local-only use.
+      - BASE_URL=${BASE_URL:-http://localhost:3000}
+      # Postgres connection string. For local dev you can run a postgres container
+      # or use a cloud DB. For Render, this is set automatically via the dashboard.
+      - DATABASE_URL=${DATABASE_URL}
+    restart: unless-stopped
