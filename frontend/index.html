@@ -5,241 +5,243 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SNIP — URL Shortener</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0a0a0a;
-      --surface: #111111;
-      --border: #222222;
-      --accent: #e8ff47;
-      --accent2: #ff4757;
-      --text: #f0f0f0;
-      --muted: #555;
-      --mono: 'Space Mono', monospace;
-      --sans: 'Syne', sans-serif;
+      --bg: #F7F3EE;
+      --surface: #FFFFFF;
+      --surface2: #F0EBE3;
+      --border: #E2D9CE;
+      --border-dark: #C8BDB0;
+      --ink: #1C1714;
+      --ink2: #6B5F55;
+      --ink3: #A89A8E;
+      --accent: #C4440A;
+      --accent-light: #FBF0EB;
+      --accent-dark: #9A3508;
+      --green: #2D6A4F;
+      --green-light: #EAF4EE;
+      --serif: 'Fraunces', Georgia, serif;
+      --mono: 'DM Mono', monospace;
     }
-
-    html { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
-
+    html { background: var(--bg); color: var(--ink); font-family: var(--serif); min-height: 100vh; }
     body {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232,255,71,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 120% 60% at 80% -20%, rgba(196,68,10,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 40% at -10% 80%, rgba(196,68,10,0.04) 0%, transparent 50%),
         var(--bg);
     }
-
-    /* HEADER */
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 2rem 3rem;
+      padding: 1.75rem 3rem;
       border-bottom: 1px solid var(--border);
+      background: rgba(247,243,238,0.85);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-
     .logo {
-      font-family: var(--sans);
-      font-weight: 800;
-      font-size: 1.5rem;
-      letter-spacing: -0.03em;
-      color: var(--accent);
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .logo span { color: var(--text); }
-
+    .logo-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
     .tagline {
       font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 0.65rem;
+      color: var(--ink3);
+      letter-spacing: 0.08em;
     }
-
-    /* HERO */
     main {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 4rem 1.5rem;
-      gap: 3rem;
+      padding: 5rem 1.5rem 4rem;
+      gap: 3.5rem;
     }
-
-    .hero-text {
-      text-align: center;
-      max-width: 640px;
-    }
-
-    .hero-text h1 {
-      font-size: clamp(2.5rem, 7vw, 5rem);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.04em;
-      margin-bottom: 1rem;
-    }
-
-    .hero-text h1 em {
-      font-style: normal;
-      color: var(--accent);
-      position: relative;
-    }
-
-    .hero-text p {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-
-    /* CARD */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 580px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-    }
-
-    .field-label {
+    .hero-text { text-align: center; max-width: 560px; }
+    .hero-eyebrow {
       font-family: var(--mono);
       font-size: 0.65rem;
       letter-spacing: 0.12em;
+      color: var(--accent);
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
-
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+    .hero-text h1 {
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+    .hero-text h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+    .hero-text p {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--ink3);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 2px 24px rgba(28,23,20,0.06), 0 1px 4px rgba(28,23,20,0.04);
+    }
+    .field-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 0.6rem;
+    }
     .input-row {
       display: flex;
-      gap: 0;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-
+    .input-row:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(196,68,10,0.08);
+    }
     input[type="text"] {
       flex: 1;
-      background: #000;
-      border: 1px solid var(--border);
-      border-right: none;
-      color: var(--text);
+      background: transparent;
+      border: none;
+      color: var(--ink);
       font-family: var(--mono);
-      font-size: 0.85rem;
-      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      padding: 0.9rem 1.1rem;
       outline: none;
-      transition: border-color 0.2s;
-      border-radius: 0;
+      min-width: 0;
     }
-
-    input[type="text"]:focus {
-      border-color: var(--accent);
-    }
-
-    input[type="text"]::placeholder { color: var(--muted); }
-
+    input[type="text"]::placeholder { color: var(--ink3); }
     .btn {
       background: var(--accent);
-      color: #000;
+      color: #fff;
       border: none;
-      font-family: var(--sans);
-      font-weight: 700;
+      font-family: var(--serif);
+      font-weight: 500;
       font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      padding: 0.85rem 1.5rem;
+      padding: 0.9rem 1.6rem;
       cursor: pointer;
       transition: background 0.15s, transform 0.1s;
       white-space: nowrap;
+      flex-shrink: 0;
     }
-
-    .btn:hover { background: #d4eb30; }
+    .btn:hover { background: var(--accent-dark); }
     .btn:active { transform: scale(0.98); }
-    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .divider {
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 1.2rem;
-      color: var(--muted);
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-    }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .custom-row {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin-bottom: 1.5rem;
-    }
-
-    .prefix {
-      background: #1a1a1a;
-      border: 1px solid var(--border);
-      border-right: none;
-      padding: 0.85rem 1rem;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    /* RESULT */
-    .result {
-      display: none;
-      background: #000;
-      border: 1px solid var(--accent);
-      padding: 1.2rem 1.5rem;
-      margin-top: 1.5rem;
-      animation: slideIn 0.3s ease;
-    }
-
-    .result.show { display: block; }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .result-label {
+      margin-bottom: 1.25rem;
+      color: var(--ink3);
       font-family: var(--mono);
       font-size: 0.6rem;
+      letter-spacing: 0.1em;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .custom-row {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .custom-row:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(196,68,10,0.08);
+    }
+    .prefix {
+      background: var(--surface2);
+      border-right: 1px solid var(--border);
+      padding: 0.9rem 1rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--ink2);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+    }
+    .result {
+      display: none;
+      background: var(--accent-light);
+      border: 1px solid rgba(196,68,10,0.2);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
+      animation: slideIn 0.25s ease;
+    }
+    .result.show { display: block; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .result-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .result-link-row {
+      margin-bottom: 0.6rem;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.4rem;
     }
-
+    .result-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .result-link-row { display: flex; align-items: center; gap: 0.75rem; }
     .result-url {
       font-family: var(--mono);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ink);
       flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -247,152 +249,113 @@
       text-decoration: none;
     }
     .result-url:hover { color: var(--accent); }
-
     .copy-btn {
-      background: var(--border);
-      border: none;
-      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border-dark);
+      color: var(--ink2);
       font-family: var(--mono);
-      font-size: 0.7rem;
-      padding: 0.4rem 0.8rem;
+      font-size: 0.65rem;
+      padding: 0.45rem 0.9rem;
       cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: background 0.15s, color 0.15s;
+      letter-spacing: 0.06em;
+      transition: all 0.15s;
       white-space: nowrap;
+      border-radius: 6px;
     }
-    .copy-btn:hover { background: var(--accent); color: #000; }
-    .copy-btn.copied { background: #1a3a1a; color: #4ade80; }
-
-    /* ERROR */
+    .copy-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .copy-btn.copied { background: var(--green-light); border-color: rgba(45,106,79,0.3); color: var(--green); }
     .error-msg {
       display: none;
       font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--accent2);
+      font-size: 0.72rem;
+      color: #9A1515;
       padding: 0.75rem 1rem;
-      border: 1px solid var(--accent2);
-      background: #1a0808;
+      border: 1px solid rgba(154,21,21,0.2);
+      background: #FFF5F5;
       margin-top: 1rem;
-      animation: slideIn 0.3s ease;
+      border-radius: 8px;
+      animation: slideIn 0.25s ease;
     }
     .error-msg.show { display: block; }
-
-    /* STATS TABLE */
-    .stats-section {
-      width: 100%;
-      max-width: 580px;
-    }
-
-    .stats-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-    }
-
-    .stats-title {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
+    .stats-section { width: 100%; max-width: 600px; }
+    .stats-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .stats-title { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--ink2); letter-spacing: -0.01em; }
     .refresh-btn {
       background: none;
       border: 1px solid var(--border);
-      color: var(--muted);
+      color: var(--ink3);
       font-family: var(--mono);
-      font-size: 0.65rem;
-      padding: 0.3rem 0.6rem;
+      font-size: 0.62rem;
+      padding: 0.35rem 0.7rem;
       cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: border-color 0.15s, color 0.15s;
+      letter-spacing: 0.06em;
+      border-radius: 6px;
+      transition: all 0.15s;
     }
     .refresh-btn:hover { border-color: var(--accent); color: var(--accent); }
-
     .stats-table {
       width: 100%;
       border-collapse: collapse;
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
     }
-
     .stats-table th {
       text-align: left;
-      color: var(--muted);
+      color: var(--ink3);
       font-weight: 400;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      font-size: 0.6rem;
-      padding: 0.5rem 0.75rem;
+      font-size: 0.58rem;
+      padding: 0.75rem 1rem;
       border-bottom: 1px solid var(--border);
+      background: var(--surface2);
     }
-
-    .stats-table td {
-      padding: 0.6rem 0.75rem;
-      border-bottom: 1px solid #191919;
-      vertical-align: middle;
+    .stats-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .stats-table tbody tr:last-child td { border-bottom: none; }
+    .stats-table tr:hover td { background: #FDFAF7; }
+    .code-cell { color: var(--accent); font-weight: 500; }
+    .url-cell { color: var(--ink3); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .clicks-cell { text-align: right; }
+    .clicks-badge {
+      display: inline-block;
+      background: var(--surface2);
+      color: var(--ink2);
+      padding: 0.15rem 0.55rem;
+      border-radius: 20px;
+      font-size: 0.65rem;
     }
-
-    .stats-table tr:hover td { background: #151515; }
-
-    .code-cell {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .url-cell {
-      color: var(--muted);
-      max-width: 220px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .clicks-cell {
-      text-align: right;
-      color: var(--text);
-    }
-
-    .date-cell { color: #444; font-size: 0.6rem; }
-
-    .empty-state {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
-    }
-
-    /* FOOTER */
+    .date-cell { color: var(--ink3); font-size: 0.62rem; }
+    .empty-state { text-align: center; padding: 2.5rem; color: var(--ink3); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; }
     footer {
       text-align: center;
-      padding: 1.5rem;
+      padding: 1.75rem;
       border-top: 1px solid var(--border);
       font-family: var(--mono);
-      font-size: 0.6rem;
-      color: #333;
+      font-size: 0.58rem;
+      color: var(--ink3);
       letter-spacing: 0.1em;
     }
-
-    /* SPINNER */
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
     .spinner {
       display: inline-block;
-      width: 12px; height: 12px;
-      border: 2px solid #333;
-      border-top-color: var(--accent);
+      width: 11px; height: 11px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
       margin-right: 6px;
       vertical-align: middle;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     @media (max-width: 600px) {
       header { padding: 1.25rem 1.5rem; }
-      .card { padding: 1.5rem; }
+      .card { padding: 1.5rem; border-radius: 12px; }
+      main { padding: 3rem 1rem 3rem; }
       .tagline { display: none; }
     }
   </style>
@@ -400,47 +363,49 @@
 <body>
 
 <header>
-  <div class="logo">SNIP<span>.</span></div>
-  <div class="tagline">// URL Shortener &nbsp; v1.0</div>
+  <div class="logo">
+    <span class="logo-dot"></span>
+    snip
+  </div>
+  <div class="tagline">url shortener · v1.0</div>
 </header>
 
 <main>
   <div class="hero-text">
-    <h1>Long URLs,<br><em>short</em> links.</h1>
-    <p>// Paste any URL. Get a short link that works on every device.</p>
+    <div class="hero-eyebrow">URL Shortener</div>
+    <h1>Short <em>link,</em><br>Long reach.</h1>
+    <p>Paste any URL and get a short, clean link<br>that works on every device, every time.</p>
   </div>
 
   <div class="card">
     <div class="field-label">Destination URL</div>
     <div class="input-row">
-      <input type="text" id="urlInput" placeholder="https://example.com/very/long/path?query=..." autocomplete="off" />
-      <button class="btn" id="shortenBtn" onclick="shortenUrl()">SNIP →</button>
+      <input type="text" id="urlInput" placeholder="https://example.com/very/long/path?with=params" autocomplete="off" />
+      <button class="btn" id="shortenBtn" onclick="shortenUrl()">Snip →</button>
     </div>
 
-    <div class="divider">optional</div>
+    <div class="divider">custom alias — optional</div>
 
-    <div class="field-label">Custom Alias</div>
     <div class="custom-row">
       <div class="prefix" id="prefixDisplay">localhost:3000/</div>
-      <input type="text" id="customCode" placeholder="my-link" style="border-right: 1px solid var(--border);" />
+      <input type="text" id="customCode" placeholder="my-link" />
     </div>
 
     <div class="result" id="result">
-      <div class="result-label">✓ Your short link</div>
+      <div class="result-label">Your short link</div>
       <div class="result-link-row">
         <a class="result-url" id="resultLink" href="#" target="_blank">—</a>
-        <button class="copy-btn" id="copyBtn" onclick="copyLink()">COPY</button>
+        <button class="copy-btn" id="copyBtn" onclick="copyLink()">Copy</button>
       </div>
     </div>
 
     <div class="error-msg" id="errorMsg"></div>
   </div>
 
-  <!-- Recent links stats -->
   <div class="stats-section">
     <div class="stats-header">
-      <div class="stats-title">// Recent links</div>
-      <button class="refresh-btn" onclick="loadStats()">↻ REFRESH</button>
+      <div class="stats-title">Recent links</div>
+      <button class="refresh-btn" onclick="loadStats()">↻ Refresh</button>
     </div>
     <table class="stats-table">
       <thead>
@@ -452,26 +417,24 @@
         </tr>
       </thead>
       <tbody id="statsBody">
-        <tr><td colspan="4" class="empty-state">Loading...</td></tr>
+        <tr><td colspan="4" class="empty-state">Loading…</td></tr>
       </tbody>
     </table>
   </div>
 </main>
 
-<footer>SNIP URL SHORTENER — SELF-HOSTED — OPEN SOURCE</footer>
+<footer>
+  Snip · Self-hosted · <a href="https://github.com/vinigani01/urlshort" target="_blank">Open source</a>
+</footer>
 
 <script>
-  // Detect base URL from window location
   const BASE = window.location.origin;
 
-  // Show actual prefix in custom alias row
-  document.getElementById('prefixDisplay').textContent = BASE + '/';
+  document.getElementById('prefixDisplay').textContent = BASE.replace(/^https?:\/\//, '') + '/';
 
-  // Handle error param in URL
   const params = new URLSearchParams(window.location.search);
   if (params.get('error')) showError(params.get('error'));
 
-  // Allow Enter key to submit
   document.getElementById('urlInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') shortenUrl();
   });
@@ -483,13 +446,10 @@
     const url = document.getElementById('urlInput').value.trim();
     const custom = document.getElementById('customCode').value.trim();
     const btn = document.getElementById('shortenBtn');
-
     if (!url) { showError('Please enter a URL.'); return; }
-
     hideResult(); hideError();
     btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span>SNIPPING';
-
+    btn.innerHTML = '<span class="spinner"></span>Snipping…';
     try {
       const res = await fetch('/api/shorten', {
         method: 'POST',
@@ -497,16 +457,14 @@
         body: JSON.stringify({ url, custom_code: custom || undefined })
       });
       const data = await res.json();
-
       if (!res.ok) { showError(data.error || 'Something went wrong.'); return; }
-
       showResult(data.short_url);
       loadStats();
     } catch(e) {
       showError('Network error. Is the server running?');
     } finally {
       btn.disabled = false;
-      btn.innerHTML = 'SNIP →';
+      btn.innerHTML = 'Snip →';
     }
   }
 
@@ -516,7 +474,7 @@
     link.href = shortUrl;
     link.textContent = shortUrl.replace(/^https?:\/\//, '');
     el.classList.add('show');
-    document.getElementById('copyBtn').textContent = 'COPY';
+    document.getElementById('copyBtn').textContent = 'Copy';
     document.getElementById('copyBtn').classList.remove('copied');
   }
 
@@ -534,9 +492,9 @@
     const url = document.getElementById('resultLink').textContent;
     navigator.clipboard.writeText(url).then(() => {
       const btn = document.getElementById('copyBtn');
-      btn.textContent = '✓ COPIED';
+      btn.textContent = '✓ Copied';
       btn.classList.add('copied');
-      setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 2000);
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
     });
   }
 
@@ -545,21 +503,19 @@
       const res = await fetch('/api/stats');
       const rows = await res.json();
       const tbody = document.getElementById('statsBody');
-
       if (!rows.length) {
-        tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No links yet. Create one above!</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No links yet — create one above.</td></tr>';
         return;
       }
-
       tbody.innerHTML = rows.map(r => {
         const shortUrl = `${BASE}/${r.short_code}`;
-        const date = new Date(r.created_at + 'Z').toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'2-digit' });
+        const date = new Date(r.created_at).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'2-digit' });
         const dest = r.original_url.replace(/^https?:\/\//, '');
         return `
           <tr>
             <td class="code-cell"><a href="${shortUrl}" target="_blank" style="color:inherit;text-decoration:none">${r.short_code}</a></td>
             <td class="url-cell" title="${r.original_url}">${dest}</td>
-            <td class="clicks-cell">${r.clicks}</td>
+            <td class="clicks-cell"><span class="clicks-badge">${r.clicks}</span></td>
             <td class="date-cell">${date}</td>
           </tr>`;
       }).join('');
