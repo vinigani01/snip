@@ -1,16 +1,30 @@
-# SNIP — Self-Hosted URL Shortener
+# Snip — URL Shortener
 
-A containerised, self-hosted URL shortener with a sleek dark UI.
-Built with Node.js, Express, SQLite, and Docker.
+A self-hosted URL shortener with custom aliases, click tracking, and a clean light UI.
+Deployed on [Render](https://render.com) with PostgreSQL.
+
+**Live:** [snip-zdbg.onrender.com](https://snip-zdbg.onrender.com)
 
 ---
 
-## 📦 Project Structure
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Node.js + Express |
+| Database | PostgreSQL (Render free tier) |
+| Frontend | Vanilla HTML / CSS / JS |
+| Hosting | Render (Docker) |
+
+---
+
+## Project Structure
 
 ```
 urlshort/
 ├── Dockerfile
 ├── docker-compose.yml
+├── render.yaml
 ├── backend/
 │   ├── server.js
 │   └── package.json
@@ -20,144 +34,59 @@ urlshort/
 
 ---
 
-## 🚀 Quick Start (Local Network)
-
-### 1. Build and run
-```bash
-docker compose up --build -d
-```
-
-### 2. Open the app
-```
-http://localhost:3000
-```
-
-Your links will be shortened to `http://localhost:3000/XXXXXX`.
-
----
-
-## 🌐 Make It Publicly Accessible (Any Device, Any Network)
-
-To generate short links accessible from the internet, you need a **public URL**.
-Pick one of these options:
-
----
-
-### Option A: Cloudflare Tunnel (Free, Permanent Domain) ✅ RECOMMENDED
-
-1. Install cloudflared:
-   ```bash
-   # macOS
-   brew install cloudflare/cloudflare/cloudflared
-
-   # Linux
-   wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-   sudo dpkg -i cloudflared-linux-amd64.deb
-   ```
-
-2. Log in (one-time):
-   ```bash
-   cloudflared tunnel login
-   ```
-
-3. Create a named tunnel:
-   ```bash
-   cloudflared tunnel create snip
-   ```
-
-4. Route DNS (replace `yourdomain.com` with your Cloudflare domain):
-   ```bash
-   cloudflared tunnel route dns snip snip.yourdomain.com
-   ```
-
-5. Start the app with your public URL:
-   ```bash
-   BASE_URL=https://snip.yourdomain.com docker compose up -d
-   cloudflared tunnel run snip --url http://localhost:3000
-   ```
-
----
-
-### Option B: ngrok (Quick, Temporary URL)
-
-1. Install: https://ngrok.com/download
-
-2. Start a tunnel:
-   ```bash
-   ngrok http 3000
-   ```
-
-3. Copy the `https://xxxx.ngrok-free.app` URL, then restart the app:
-   ```bash
-   BASE_URL=https://xxxx.ngrok-free.app docker compose up --build -d
-   ```
-
-> Note: Free ngrok URLs change every restart. Upgrade to a paid plan for a fixed subdomain.
-
----
-
-### Option C: Deploy to a VPS (Permanent, Full Control)
-
-1. SSH into your server (e.g., DigitalOcean, Hetzner, Linode)
-
-2. Install Docker:
-   ```bash
-   curl -fsSL https://get.docker.com | sh
-   ```
-
-3. Clone or copy project files, then:
-   ```bash
-   BASE_URL=http://YOUR_SERVER_IP:3000 docker compose up -d
-   ```
-
-4. For a real domain + HTTPS, add an Nginx reverse proxy + Let's Encrypt certificate:
-   ```bash
-   apt install certbot python3-certbot-nginx -y
-   certbot --nginx -d yourdomain.com
-   ```
-   Then set `BASE_URL=https://yourdomain.com` and redeploy.
-
----
-
-## ⚙️ Configuration
-
-| Environment Variable | Default                  | Description                          |
-|----------------------|--------------------------|--------------------------------------|
-| `PORT`               | `3000`                   | Port the server listens on           |
-| `BASE_URL`           | `http://localhost:3000`  | Public base URL for short links      |
-
-Set these in `docker-compose.yml` or pass via CLI:
-```bash
-BASE_URL=https://mysite.com docker compose up -d
-```
-
----
-
-## 🛑 Stop / Remove
-
-```bash
-# Stop
-docker compose down
-
-# Stop and delete all data
-docker compose down -v
-```
-
----
-
-## 📊 Features
+## Features
 
 - Shorten any valid URL
 - Custom aliases (e.g. `/my-link`)
 - Click tracking
 - Recent links dashboard
-- SQLite persistence (data survives container restarts)
-- Works on all devices on your network or publicly
+- Persistent storage via PostgreSQL
 
 ---
 
-## 🔒 Security Notes
+## Deploy to Render
 
+This repo includes a `render.yaml` blueprint that sets everything up automatically.
+
+### Steps
+
+1. Fork or clone this repo to your GitHub account
+
+2. Go to [render.com](https://render.com) → **New → Blueprint**
+
+3. Connect your GitHub repo — Render will detect `render.yaml` and create:
+   - A free PostgreSQL database (`urlshort-db`)
+   - A Docker web service (`snip`)
+
+4. After the first deploy completes, copy your app URL from the Render dashboard (e.g. `https://your-app.onrender.com`)
+
+5. Go to your service → **Environment** → set `BASE_URL` to your app URL → **Save Changes**
+
+Render will redeploy automatically and your short links will use the correct base URL.
+
+---
+
+## Environment Variables
+
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | PostgreSQL connection string — set automatically by Render via the blueprint |
+| `BASE_URL` | Public base URL for generated short links (e.g. `https://your-app.onrender.com`) |
+| `PORT` | Port the server listens on (default: `3000`) |
+
+---
+
+## Custom Domain
+
+To connect a custom domain:
+
+1. Render dashboard → your service → **Settings → Custom Domains**
+2. Add your domain and follow the DNS instructions
+3. Update `BASE_URL` in Environment to match your custom domain
+
+---
+
+## Notes
+
+- The Render free tier spins down after inactivity — the first request after a period of idle may take ~50 seconds to wake up.
 - There is no authentication by default — anyone who can reach the app can create links.
-- For private use, add HTTP basic auth via Nginx or a middleware.
-- SQLite data is stored in a Docker volume (`url_data`).
