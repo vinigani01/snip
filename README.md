@@ -74,7 +74,7 @@ cd snip
 docker compose -f docker-compose-local.yml up --build -d
 ```
 
-This starts two containers — a Postgres database and the app — on the same Docker network. No manual database setup needed.
+This starts two containers (a postgres database and the app) on the same Docker network. No manual database setup needed.
 
 **3. Open the app**
 
@@ -107,7 +107,7 @@ The `render.yaml` blueprint automates the full setup.
 
 2. Go to [render.com](https://render.com) → **New → Blueprint**
 
-3. Connect your GitHub repo — Render reads `render.yaml` and creates:
+3. Connect your GitHub repo, Render reads `render.yaml` and creates:
    - A free PostgreSQL database
    - A Docker web service built from the `Dockerfile`
 
@@ -123,7 +123,7 @@ Render redeploys automatically on every push to `main`.
 
 | Variable | Description |
 |---|---|
-| `DATABASE_URL` | PostgreSQL connection string — auto-set by Render via the blueprint; set manually for local use |
+| `DATABASE_URL` | PostgreSQL connection string auto-set by Render via the blueprint; set manually for local use |
 | `BASE_URL` | Public base URL for generated short links (e.g. `https://your-app.onrender.com`) |
 | `PORT` | Port the container exposes (default: `3000`) |
 
