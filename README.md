@@ -40,7 +40,7 @@ The repo includes two compose files:
 | File | Purpose |
 |---|---|
 | `docker-compose.yml` | For Production - used by Render |
-| `docker-compose.local.yml` | For Running Locally - on Local Machine |
+| `docker-compose-local.yml` | For Running Locally - on Local Machine |
 
 ---
 
