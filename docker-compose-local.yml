@@ -1,0 +1,28 @@
+# this is for local development only — spins up a postgres container alongside the app.
+# for production deployment, see docker-compose.yml and render.yaml
+# to run: docker compose -f docker-compose-local.yml up -d
+
+services:
+# local postgres instance — not used in production because render provides
+  db:
+    image: postgres:16
+    container_name: snip-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: snip
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: snip-url
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - BASE_URL=http://localhost:3000
+      - DATABASE_URL=postgresql://user:password@db:5432/snip
+    depends_on:
+      - db
+    restart: unless-stopped
