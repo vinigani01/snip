@@ -1,15 +1,10 @@
-# Snip — URL Shortener
+# Snip - URL Shortener
 
 A self-hosted, containerised URL shortener with custom aliases, click tracking, and a clean light UI.
 Built with Docker and deployed on [Render](https://render.com) with PostgreSQL.
 
 **Live:** [snip-zdbg.onrender.com](https://snip-zdbg.onrender.com)
 
-## Notes
-
-- The Render free tier spins down after inactivity, the first request after idle may take ~50 seconds as the container restarts.
-- There is no authentication by default — anyone who can reach the app can create links.
-  
 ---
 
 ## Stack
@@ -17,7 +12,7 @@ Built with Docker and deployed on [Render](https://render.com) with PostgreSQL.
 | Layer | Technology |
 |---|---|
 | Backend | Node.js + Express |
-| Database | PostgreSQL (Render free tier) |
+| Database | PostgreSQL |
 | Frontend | Vanilla HTML / CSS / JS |
 | Container | Docker + Docker Compose |
 | Hosting | Render (Docker runtime) |
@@ -29,7 +24,8 @@ Built with Docker and deployed on [Render](https://render.com) with PostgreSQL.
 ```
 urlshort/
 ├── Dockerfile
-├── docker-compose.yml
+├── docker-compose.yml           # Production / Render deployment
+├── docker-compose.local.yml     # Local development (includes Postgres container)
 ├── render.yaml
 ├── .env.example
 ├── backend/
@@ -38,6 +34,13 @@ urlshort/
 └── frontend/
     └── index.html
 ```
+
+The repo includes two compose files:
+
+| File | Purpose |
+|---|---|
+| `docker-compose.yml` | For Production - used by Render |
+| `docker-compose.local.yml` | For Running Locally - on Local Machine |
 
 ---
 
@@ -48,55 +51,52 @@ urlshort/
 - Click tracking
 - Recent links dashboard
 - Persistent storage via PostgreSQL
-- Fully containerised — runs anywhere Docker runs
+- Fully containerised - runs anywhere Docker runs
 
 ---
 
 ## Run Locally with Docker
 
-### 1. Clone the repo
+### Steps
+
+**1. Clone the repo**
 
 ```bash
-git clone https://github.com/vinigani01/urlshort
-cd urlshort
+git clone https://github.com/vinigani01/snip
+cd snip
 ```
 
-### 2. Set up environment
+**2. Start the app**
 
 ```bash
-cp .env.example .env
+docker compose -f docker-compose-local.yml up --build -d
 ```
 
-Edit `.env` and set `DATABASE_URL` to a local or remote PostgreSQL connection string:
+This starts two containers — a Postgres database and the app — on the same Docker network. No manual database setup needed.
 
-```
-DATABASE_URL=postgresql://user:password@localhost:5432/urlshort
-BASE_URL=http://localhost:3000
-```
-
-### 3. Build and run
-
-```bash
-docker compose up --build -d
-```
-
-### 4. Open the app
+**3. Open the app**
 
 ```
 http://localhost:3000
 ```
 
-### Stop
+**4. Stop the app**
 
 ```bash
-docker compose down
+docker compose -f docker-compose-local.yml down
+```
+
+### Next time (no rebuild needed)
+
+```bash
+docker compose -f docker-compose-local.yml up -d
 ```
 
 ---
 
-## Deploy to Render (Recommended)
+## Deploy to Render
 
-Render runs the app directly from the `Dockerfile` — no extra build config needed.
+Render runs the app directly from the `Dockerfile` using `docker-compose.yml`.
 The `render.yaml` blueprint automates the full setup.
 
 ### Steps
@@ -121,7 +121,7 @@ Render redeploys automatically on every push to `main`.
 
 | Variable | Description |
 |---|---|
-| `DATABASE_URL` | PostgreSQL connection string — auto-set by Render via the blueprint |
+| `DATABASE_URL` | PostgreSQL connection string — auto-set by Render via the blueprint; set manually for local use |
 | `BASE_URL` | Public base URL for generated short links (e.g. `https://your-app.onrender.com`) |
 | `PORT` | Port the container exposes (default: `3000`) |
 
@@ -133,3 +133,9 @@ Render redeploys automatically on every push to `main`.
 2. Add your domain and follow the DNS instructions
 3. Update `BASE_URL` in Environment to match your custom domain
 
+---
+
+## Notes
+
+- The Render free tier spins down after inactivity - the first request after idle may take ~50 seconds as the container restarts.
+- There is no authentication by default - anyone who can reach the app can create links.
