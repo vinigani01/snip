@@ -1,9 +1,11 @@
 # Snip - URL Shortener
 
 A self-hosted, containerised URL shortener with custom aliases, click tracking, and a clean light UI.
-Built with Docker and deployed on [Render](https://render.com) with PostgreSQL.
+Built with Docker and deployed on Render with PostgreSQL.
 
-**Live:** [snip-zdbg.onrender.com](https://snip-zdbg.onrender.com)
+**Landing Page:** [urlsnip.is-a.dev](https://urlsnip.is-a.dev)
+
+**Application Page:** [snip-zdbg.onrender.com](https://snip-zdbg.onrender.com)
 
 ---
 
@@ -137,5 +139,5 @@ Render redeploys automatically on every push to `main`.
 
 ## Notes
 
-- The Render free tier spins down after inactivity - the first request after idle may take ~50 seconds as the container restarts.
+- The Render free tier spins down after inactivity - the first request after idle may take upto a minute as the container restarts.
 - There is no authentication by default - anyone who can reach the app can create links.
