@@ -9,19 +9,19 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #F7F3EE;
-      --surface: #FFFFFF;
-      --surface2: #F0EBE3;
-      --border: #E2D9CE;
-      --border-dark: #C8BDB0;
-      --ink: #1C1714;
-      --ink2: #6B5F55;
-      --ink3: #A89A8E;
-      --accent: #C4440A;
-      --accent-light: #FBF0EB;
-      --accent-dark: #9A3508;
-      --green: #2D6A4F;
-      --green-light: #EAF4EE;
+      --bg: #0D1520;
+      --surface: #161F2E;
+      --surface2: #1C2840;
+      --border: #243049;
+      --border-dark: #2E3D5C;
+      --ink: #F0EAD6;
+      --ink2: #B8A98A;
+      --ink3: #7A6D58;
+      --accent: #F2AA4C;
+      --accent-light: #1E2030;
+      --accent-dark: #D08A2A;
+      --green: #3A9E6E;
+      --green-light: #0F2A1E;
       --serif: 'Fraunces', Georgia, serif;
       --mono: 'DM Mono', monospace;
     }
@@ -31,8 +31,8 @@
       display: flex;
       flex-direction: column;
       background:
-        radial-gradient(ellipse 120% 60% at 80% -20%, rgba(196,68,10,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 80% 40% at -10% 80%, rgba(196,68,10,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse 120% 60% at 80% -20%, rgba(242,170,76,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 40% at -10% 80%, rgba(242,170,76,0.04) 0%, transparent 50%),
         var(--bg);
     }
     header {
@@ -41,7 +41,7 @@
       justify-content: space-between;
       padding: 1.75rem 3rem;
       border-bottom: 1px solid var(--border);
-      background: rgba(247,243,238,0.85);
+      background: rgba(13,21,32,0.88);
       backdrop-filter: blur(8px);
       position: sticky;
       top: 0;
@@ -120,7 +120,7 @@
       padding: 2.5rem;
       width: 100%;
       max-width: 600px;
-      box-shadow: 0 2px 24px rgba(28,23,20,0.06), 0 1px 4px rgba(28,23,20,0.04);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.25), 0 1px 4px rgba(0,0,0,0.15);
     }
     .field-label {
       font-family: var(--mono);
@@ -140,7 +140,7 @@
     }
     .input-row:focus-within {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(196,68,10,0.08);
+      box-shadow: 0 0 0 3px rgba(242,170,76,0.12);
     }
     input[type="text"] {
       flex: 1;
@@ -156,10 +156,10 @@
     input[type="text"]::placeholder { color: var(--ink3); }
     .btn {
       background: var(--accent);
-      color: #fff;
+      color: #101820;
       border: none;
       font-family: var(--serif);
-      font-weight: 500;
+      font-weight: 600;
       font-size: 0.85rem;
       padding: 0.9rem 1.6rem;
       cursor: pointer;
@@ -169,7 +169,7 @@
     }
     .btn:hover { background: var(--accent-dark); }
     .btn:active { transform: scale(0.98); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .divider {
       display: flex;
       align-items: center;
@@ -191,7 +191,7 @@
     }
     .custom-row:focus-within {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(196,68,10,0.08);
+      box-shadow: 0 0 0 3px rgba(242,170,76,0.12);
     }
     .prefix {
       background: var(--surface2);
@@ -206,8 +206,8 @@
     }
     .result {
       display: none;
-      background: var(--accent-light);
-      border: 1px solid rgba(196,68,10,0.2);
+      background: rgba(242,170,76,0.08);
+      border: 1px solid rgba(242,170,76,0.25);
       border-radius: 10px;
       padding: 1.25rem 1.5rem;
       margin-top: 1.5rem;
@@ -250,7 +250,7 @@
     }
     .result-url:hover { color: var(--accent); }
     .copy-btn {
-      background: var(--surface);
+      background: var(--surface2);
       border: 1px solid var(--border-dark);
       color: var(--ink2);
       font-family: var(--mono);
@@ -262,16 +262,16 @@
       white-space: nowrap;
       border-radius: 6px;
     }
-    .copy-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .copy-btn.copied { background: var(--green-light); border-color: rgba(45,106,79,0.3); color: var(--green); }
+    .copy-btn:hover { background: var(--accent); border-color: var(--accent); color: #101820; }
+    .copy-btn.copied { background: var(--green-light); border-color: rgba(58,158,110,0.3); color: var(--green); }
     .error-msg {
       display: none;
       font-family: var(--mono);
       font-size: 0.72rem;
-      color: #9A1515;
+      color: #F87171;
       padding: 0.75rem 1rem;
-      border: 1px solid rgba(154,21,21,0.2);
-      background: #FFF5F5;
+      border: 1px solid rgba(248,113,113,0.2);
+      background: rgba(248,113,113,0.07);
       margin-top: 1rem;
       border-radius: 8px;
       animation: slideIn 0.25s ease;
@@ -314,9 +314,9 @@
       border-bottom: 1px solid var(--border);
       background: var(--surface2);
     }
-    .stats-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .stats-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--ink); }
     .stats-table tbody tr:last-child td { border-bottom: none; }
-    .stats-table tr:hover td { background: #FDFAF7; }
+    .stats-table tr:hover td { background: rgba(242,170,76,0.04); }
     .code-cell { color: var(--accent); font-weight: 500; }
     .url-cell { color: var(--ink3); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .clicks-cell { text-align: right; }
@@ -344,8 +344,8 @@
     .spinner {
       display: inline-block;
       width: 11px; height: 11px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
+      border: 2px solid rgba(16,24,32,0.3);
+      border-top-color: #101820;
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
       margin-right: 6px;
@@ -417,7 +417,7 @@
         </tr>
       </thead>
       <tbody id="statsBody">
-        <tr><td colspan="4" class="empty-state">Loading…</td></tr>
+        <tr><td colspan="4" class="empty-state">No links yet — create one above.</td></tr>
       </tbody>
     </table>
   </div>
@@ -429,11 +429,7 @@
 
 <script>
   const BASE = window.location.origin;
-
   document.getElementById('prefixDisplay').textContent = BASE.replace(/^https?:\/\//, '') + '/';
-
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('error')) showError(params.get('error'));
 
   document.getElementById('urlInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') shortenUrl();
@@ -524,8 +520,6 @@
         '<tr><td colspan="4" class="empty-state">Could not load stats.</td></tr>';
     }
   }
-
-  loadStats();
 </script>
 </body>
 </html>
